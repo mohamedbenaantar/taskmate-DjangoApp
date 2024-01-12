@@ -3,15 +3,26 @@
 {% block content %}
     <div class="container">
         <br/>
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> 
+          </div>
+          {% endfor %}
+        {% endif %}
         <form method="POST">
            {% csrf_token %}
             <div class="mb-3">
-              <input type="text" class="form-control" placeholder="New Task" name="todo">
+              <input type="text" class="form-control" placeholder="New Task" name="task">
               <div id="emailHelp" class="form-text">Describe your Task HERE.</div>
             </div>
             
-           
-            <button type="submit" class="btn btn-primary">Submit</button>
+        
+            <button type="submit" class="btn btn-primary">Add Task</button>
           </form>
 
 
@@ -25,27 +36,28 @@
               </tr>
             </thead>
             <tbody>
+              {% if all_tasks %} <!-- While loading the page if there is a task list then -->
+                  {% for obj in all_tasks %}
+                  {% if obj.done %}
+                <tr class="table-success">
+                  <td scope="row">{{ obj.task }}</td>
+                  <td>Completed</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                
 
-                {% for obj in all_tasks %}
-                {% if obj.done %}
-              <tr class="table-success">
-                <td scope="row">{{ obj.task }}</td>
-                <td>Completed</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              
+                {% else %}
+                <tr class="sucess">
+                  <td scope="row">{{ obj.task }}</td>
+                  <td>Not Completed</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
 
-              {% else %}
-              <tr class="sucess">
-                <td scope="row">{{ obj.task }}</td>
-                <td>Not Completed</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
               {% endif %}
-              {% endfor %}
-              
             </tbody>
           </table>
         

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import TaskList
 from .forms import TaskForm
+from django.contrib import messages
 # Create your views here.
 
 def todolist(request):
@@ -8,6 +9,7 @@ def todolist(request):
         form = TaskForm(request.POST or None)
         if form.is_valid():
             form.save()
+        messages.success(request, 'Task Added successfully!')
         return redirect('todolist') 
     else: ## Get request
         all_tasks = TaskList.objects.all()
