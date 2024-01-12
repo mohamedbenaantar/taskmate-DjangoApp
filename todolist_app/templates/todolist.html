@@ -2,6 +2,53 @@
 
 {% block content %}
     <div class="container">
-        <h1>{{ all_tasks }}</h1>
+        <br/>
+        <form method="POST">
+           {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="New Task" name="todo">
+              <div id="emailHelp" class="form-text">Describe your Task HERE.</div>
+            </div>
+            
+           
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
+
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Done</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                {% for obj in all_tasks %}
+                {% if obj.done %}
+              <tr class="table-success">
+                <td scope="row">{{ obj.task }}</td>
+                <td>Completed</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              
+
+              {% else %}
+              <tr class="sucess">
+                <td scope="row">{{ obj.task }}</td>
+                <td>Not Completed</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+              
+            </tbody>
+          </table>
+        
+            
     </div>
 {% endblock content %}

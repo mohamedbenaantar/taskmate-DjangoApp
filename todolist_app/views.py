@@ -1,10 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import TaskList
+from .forms import TaskForm
 # Create your views here.
 
 def todolist(request):
-    all_tasks = TaskList.objects.all()
-    return render(request, 'todolist.html',{'all_tasks':all_tasks})
+    if request.method == 'POST':
+        form = TaskForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+        return redirect('todolist') 
+    else: ## Get request
+        all_tasks = TaskList.objects.all()
+        return render(request, 'todolist.html',{'all_tasks':all_tasks})
 
 def contactus(request):
     content = {
