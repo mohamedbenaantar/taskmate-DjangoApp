@@ -8,3 +8,4 @@ class TaskForm(forms.ModelForm):
         model = TaskList
         fields = ['task', 'done'] ## mention the fields that I'm going to edit
         
+    
